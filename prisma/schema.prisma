@@ -1,0 +1,64 @@
+// Prisma schema for the Leiva Group property management site.
+//
+// Targets Postgres so local dev matches production exactly. Point
+// DATABASE_URL (in prisma.config.ts / .env) at any hosted Postgres
+// instance for production — Vercel Postgres, Neon, and Supabase all work
+// with no schema changes. See README.md for deployment instructions.
+
+generator client {
+  provider = "prisma-client"
+  output   = "../app/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Rental {
+  id                String   @id @default(cuid())
+  address           String
+  city              String   @default("South Bay, CA")
+  price             String
+  beds              Int      @default(0)
+  baths             Int      @default(0)
+  sqft              String   @default("")
+  homeType          String   @default("")
+  yearBuilt         String   @default("")
+  parking           String   @default("")
+  lotSize           String   @default("")
+  hoaFee            String   @default("")
+  laundry           String   @default("")
+  cooling           String   @default("")
+  heating           String   @default("")
+  amenities         String   @default("")
+  description       String   @default("")
+  zillowUrl         String   @default("")
+  petsPolicy        String   @default("")
+  availableDate     String   @default("")
+  leaseTerm         String   @default("")
+  utilitiesIncluded String   @default("")
+  furnished         String   @default("")
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  photos            RentalPhoto[]
+}
+
+model RentalPhoto {
+  id       String @id @default(cuid())
+  rentalId String
+  rental   Rental @relation(fields: [rentalId], references: [id], onDelete: Cascade)
+  url      String
+  position Int    @default(0)
+
+  @@index([rentalId])
+}
+
+model Appointment {
+  id        String   @id @default(cuid())
+  date      String
+  slot      String
+  name      String
+  email     String
+  reason    String   @default("General Question")
+  createdAt DateTime @default(now())
+}
