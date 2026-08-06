@@ -29,9 +29,16 @@ export default async function CurrentListingsPage() {
                 {r.photos[0] && <Image src={r.photos[0].url} alt={r.address} fill style={{ objectFit: "cover" }} unoptimized />}
               </div>
               <div>
-                <div style={{ fontWeight: 700, fontSize: 15 }}>{r.address}</div>
+                <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                  <div style={{ fontWeight: 700, fontSize: 15 }}>{r.address}</div>
+                  {!r.published && (
+                    <span className="tag" style={{ background: "#f8e3c4", color: "#8a5a1c", fontSize: 11 }}>
+                      Draft
+                    </span>
+                  )}
+                </div>
                 <div className="text-muted" style={{ fontSize: 13 }}>
-                  {r.price} · {r.beds} bd · {r.baths} ba · {r.sqft} sqft
+                  {r.price || "No rent set"} · {r.beds} bd · {r.baths} ba · {r.sqft || "sqft?"}
                 </div>
               </div>
               <div style={{ display: "flex", gap: 8 }}>

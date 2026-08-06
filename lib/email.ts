@@ -24,7 +24,7 @@ export async function sendBookingNotification(booking: {
   });
 
   try {
-    await resend.emails.send({
+    const { data, error } = await resend.emails.send({
       from: "Leiva Group Website <onboarding@resend.dev>",
       to,
       replyTo: booking.email,
@@ -38,6 +38,13 @@ export async function sendBookingNotification(booking: {
         `Requested time: ${dateDisplay} at ${booking.slot}`,
       ].join("\n"),
     });
+    // The Resend SDK doesn't throw for rejected sends — it returns `error`
+    // instead, so this check is required or failures go unnoticed.
+    if (error) {
+      console.error("[email] Resend rejected the booking notification:", error);
+    } else {
+      console.log("[email] Booking notification sent:", data?.id);
+    }
   } catch (err) {
     // Never let an email failure block the booking from saving.
     console.error("[email] Failed to send booking notification:", err);

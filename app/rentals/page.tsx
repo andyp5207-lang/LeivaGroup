@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
-import { listRentals } from "@/lib/rentals";
+import { listPublishedRentals } from "@/lib/rentals";
 
 export const metadata: Metadata = {
   title: "Properties for Rent — Leiva Group",
@@ -22,7 +22,7 @@ function RentalPlaceholderArt() {
 }
 
 export default async function RentalsPage() {
-  const rentals = await listRentals();
+  const rentals = await listPublishedRentals();
 
   return (
     <div style={{ maxWidth: 1180, margin: "0 auto", padding: "64px 24px 90px" }}>

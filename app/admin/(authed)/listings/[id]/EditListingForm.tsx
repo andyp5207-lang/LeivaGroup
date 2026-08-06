@@ -82,6 +82,24 @@ export default function EditListingForm({ rental }: { rental: RentalWithPhotos }
       </div>
 
       <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+        <div
+          style={{
+            padding: 16,
+            borderRadius: "var(--radius-lg)",
+            border: "1px solid var(--color-divider)",
+            background: rental.published ? "var(--color-accent-100)" : "var(--color-bg)",
+          }}
+        >
+          <label style={{ display: "flex", alignItems: "center", gap: 10, cursor: "pointer", fontWeight: 700, fontSize: 14 }}>
+            <input type="checkbox" name="published" defaultChecked={rental.published} style={{ width: 18, height: 18 }} />
+            Published (visible on the public Rentals page)
+          </label>
+          {!rental.published && (
+            <p className="text-muted" style={{ fontSize: 12, margin: "8px 0 0" }}>
+              This is a draft — it won&rsquo;t show up on the live site until you check this and save.
+            </p>
+          )}
+        </div>
         <div style={{ padding: 20, borderRadius: "var(--radius-lg)", border: "1px solid var(--color-divider)", background: "var(--color-bg)" }}>
           <div className="text-muted" style={{ fontSize: 12, marginBottom: 10 }}>
             Listing Link

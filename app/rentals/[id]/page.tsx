@@ -2,21 +2,21 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getRental, amenitiesList, hasLeaseDetails } from "@/lib/rentals";
+import { getPublishedRental, amenitiesList, hasLeaseDetails } from "@/lib/rentals";
 import RentalGallery from "@/components/RentalGallery";
 
 export const dynamic = "force-dynamic";
 
 export async function generateMetadata({ params }: PageProps<"/rentals/[id]">): Promise<Metadata> {
   const { id } = await params;
-  const rental = await getRental(id);
+  const rental = await getPublishedRental(id);
   if (!rental) return { title: "Rental not found — Leiva Group" };
   return { title: `${rental.address} — Leiva Group`, description: rental.description || undefined };
 }
 
 export default async function RentalDetailPage({ params }: PageProps<"/rentals/[id]">) {
   const { id } = await params;
-  const rental = await getRental(id);
+  const rental = await getPublishedRental(id);
   if (!rental) notFound();
 
   const photos = rental.photos.map((p) => p.url);

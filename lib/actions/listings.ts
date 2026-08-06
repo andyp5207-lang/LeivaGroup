@@ -110,6 +110,7 @@ export async function updateListingAction(
         leaseTerm: String(formData.get("leaseTerm") || ""),
         utilitiesIncluded: String(formData.get("utilitiesIncluded") || ""),
         furnished: String(formData.get("furnished") || ""),
+        published: formData.get("published") === "on",
       },
     });
 

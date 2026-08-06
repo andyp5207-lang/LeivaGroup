@@ -38,6 +38,7 @@ model Rental {
   leaseTerm         String   @default("")
   utilitiesIncluded String   @default("")
   furnished         String   @default("")
+  published         Boolean  @default(true)
   createdAt         DateTime @default(now())
   updatedAt         DateTime @updatedAt
   photos            RentalPhoto[]
