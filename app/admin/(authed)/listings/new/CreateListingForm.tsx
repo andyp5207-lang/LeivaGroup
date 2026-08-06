@@ -1,34 +1,43 @@
 "use client";
 
-import { useActionState, useRef, useEffect } from "react";
+import { useActionState, useRef, useState, useEffect, startTransition } from "react";
 import { createListingAction, type ListingFormState } from "@/lib/actions/listings";
-import PhotoDropzone from "@/components/PhotoDropzone";
-
-const PHOTO_SLOTS = ["photo1", "photo2", "photo3", "photo4", "photo5", "photo6"];
+import PhotoPicker, { type PhotoItem } from "@/components/PhotoPicker";
 
 export default function CreateListingForm() {
   const [state, formAction, pending] = useActionState<ListingFormState, FormData>(createListingAction, null);
   const formRef = useRef<HTMLFormElement>(null);
+  const [photos, setPhotos] = useState<PhotoItem[]>([]);
   const wasPending = useRef(false);
 
   useEffect(() => {
     // Reset the form after a successful (error-free) submit that just finished.
     if (wasPending.current && !pending && !state?.error) {
       formRef.current?.reset();
+      setPhotos([]);
     }
     wasPending.current = pending;
   }, [pending, state]);
 
+  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    const fd = new FormData(e.currentTarget);
+    for (const p of photos) {
+      if (p.file) fd.append("newPhotos", p.file);
+    }
+    startTransition(() => {
+      formAction(fd);
+    });
+  }
+
   return (
-    <form ref={formRef} action={formAction} className="mob-stack" style={{ display: "grid", gridTemplateColumns: "280px 1fr", gap: 24, alignItems: "start" }}>
-      <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-        <PhotoDropzone name="photo1" label="Drop main photo" aspectRatio="4/3" />
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(2,1fr)", gap: 8 }}>
-          {PHOTO_SLOTS.slice(1).map((slot, i) => (
-            <PhotoDropzone key={slot} name={slot} label={`Photo ${i + 2}`} aspectRatio="4/3" />
-          ))}
-        </div>
-      </div>
+    <form
+      ref={formRef}
+      onSubmit={handleSubmit}
+      className="mob-stack"
+      style={{ display: "grid", gridTemplateColumns: "280px 1fr", gap: 24, alignItems: "start" }}
+    >
+      <PhotoPicker items={photos} onChange={setPhotos} />
 
       <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
         <div className="field">

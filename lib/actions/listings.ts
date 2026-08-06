@@ -5,8 +5,6 @@ import { prisma } from "@/lib/prisma";
 import { isAdminAuthed } from "@/lib/session";
 import { fileToDataUrl } from "@/lib/file-to-data-url";
 
-const PHOTO_FIELDS = ["photo1", "photo2", "photo3", "photo4", "photo5", "photo6"];
-
 async function requireAdmin() {
   if (!(await isAdminAuthed())) {
     throw new Error("Not authorized.");
@@ -24,14 +22,12 @@ export async function createListingAction(
   const address = String(formData.get("address") || "").trim();
   if (!address) return { error: "Address is required." };
 
-  const photoUrls: string[] = [];
+  const photoFiles = formData.getAll("newPhotos").filter((f) => f instanceof File && f.size > 0) as File[];
+  let photoUrls: (string | null)[];
   try {
-    for (const field of PHOTO_FIELDS) {
-      const url = await fileToDataUrl(formData.get(field));
-      if (url) photoUrls.push(url);
-    }
+    photoUrls = await Promise.all(photoFiles.map((f) => fileToDataUrl(f)));
   } catch (err) {
-    return { error: err instanceof Error ? err.message : "Could not read uploaded photo." };
+    return { error: err instanceof Error ? err.message : "Could not read an uploaded photo." };
   }
 
   await prisma.rental.create({
@@ -51,7 +47,7 @@ export async function createListingAction(
       city: "South Bay, CA",
       homeType: "Residential",
       photos: {
-        create: photoUrls.map((url, i) => ({ url, position: i })),
+        create: photoUrls.filter((url): url is string => !!url).map((url, i) => ({ url, position: i })),
       },
     },
   });
@@ -72,17 +68,19 @@ export async function updateListingAction(
   const address = String(formData.get("address") || "").trim();
   if (!id || !address) return { error: "Address is required." };
 
+  // The photo picker sends the full desired photo order: a mix of
+  // "keepPhotoIds" (existing RentalPhoto ids to retain, in order) and
+  // "newPhotos" (freshly uploaded files to append at the end, in order).
+  // Anything not listed in keepPhotoIds is deleted.
+  const keepIds = formData.getAll("keepPhotoIds").map(String);
+  const newPhotoFiles = formData.getAll("newPhotos").filter((f) => f instanceof File && f.size > 0) as File[];
+
   let newPhotoUrls: (string | null)[];
   try {
-    newPhotoUrls = await Promise.all(PHOTO_FIELDS.map((f) => fileToDataUrl(formData.get(f))));
+    newPhotoUrls = await Promise.all(newPhotoFiles.map((f) => fileToDataUrl(f)));
   } catch (err) {
-    return { error: err instanceof Error ? err.message : "Could not read uploaded photo." };
+    return { error: err instanceof Error ? err.message : "Could not read an uploaded photo." };
   }
-
-  const existing = await prisma.rentalPhoto.findMany({
-    where: { rentalId: id },
-    orderBy: { position: "asc" },
-  });
 
   await prisma.$transaction(async (tx) => {
     await tx.rental.update({
@@ -114,15 +112,18 @@ export async function updateListingAction(
       },
     });
 
-    for (let i = 0; i < PHOTO_FIELDS.length; i++) {
-      const url = newPhotoUrls[i];
-      if (!url) continue; // no replacement uploaded for this slot — keep existing
-      const current = existing[i];
-      if (current) {
-        await tx.rentalPhoto.update({ where: { id: current.id }, data: { url } });
-      } else {
-        await tx.rentalPhoto.create({ data: { rentalId: id, url, position: i } });
-      }
+    // Remove any existing photo not present in keepIds.
+    await tx.rentalPhoto.deleteMany({ where: { rentalId: id, id: { notIn: keepIds.length ? keepIds : ["__none__"] } } });
+
+    // Re-number the kept photos to match the order the picker sent.
+    for (let i = 0; i < keepIds.length; i++) {
+      await tx.rentalPhoto.update({ where: { id: keepIds[i] }, data: { position: i } });
+    }
+
+    // Append newly uploaded photos after the kept ones.
+    const validNewUrls = newPhotoUrls.filter((u): u is string => !!u);
+    for (let i = 0; i < validNewUrls.length; i++) {
+      await tx.rentalPhoto.create({ data: { rentalId: id, url: validNewUrls[i], position: keepIds.length + i } });
     }
   });
 

@@ -1,19 +1,31 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useState, startTransition, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { updateListingAction, type ListingFormState } from "@/lib/actions/listings";
-import PhotoDropzone from "@/components/PhotoDropzone";
+import PhotoPicker, { type PhotoItem } from "@/components/PhotoPicker";
 import type { RentalWithPhotos } from "@/lib/rentals";
-
-const PHOTO_SLOTS = ["photo1", "photo2", "photo3", "photo4", "photo5", "photo6"];
 
 export default function EditListingForm({ rental }: { rental: RentalWithPhotos }) {
   const [state, formAction, pending] = useActionState<ListingFormState, FormData>(updateListingAction, null);
   const router = useRouter();
+  const formRef = useRef<HTMLFormElement>(null);
+  const [photos, setPhotos] = useState<PhotoItem[]>(
+    rental.photos.map((p) => ({ key: p.id, url: p.url, existingId: p.id }))
+  );
+
+  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    const fd = new FormData(e.currentTarget);
+    for (const p of photos) {
+      if (p.existingId) fd.append("keepPhotoIds", p.existingId);
+      else if (p.file) fd.append("newPhotos", p.file);
+    }
+    startTransition(() => formAction(fd));
+  }
 
   return (
-    <form action={formAction} className="mob-stack" style={{ display: "grid", gridTemplateColumns: "1.6fr 1fr", gap: 40, alignItems: "start" }}>
+    <form ref={formRef} onSubmit={handleSubmit} className="mob-stack" style={{ display: "grid", gridTemplateColumns: "1.6fr 1fr", gap: 40, alignItems: "start" }}>
       <input type="hidden" name="id" value={rental.id} />
 
       <div>
@@ -36,11 +48,8 @@ export default function EditListingForm({ rental }: { rental: RentalWithPhotos }
           </div>
         </div>
 
-        <PhotoDropzone name="photo1" label="Main photo" initialUrl={rental.photos[0]?.url} aspectRatio="16/10" />
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(5,1fr)", gap: 10, marginTop: 10, marginBottom: 24 }}>
-          {PHOTO_SLOTS.slice(1).map((slot, i) => (
-            <PhotoDropzone key={slot} name={slot} label={`Photo ${i + 2}`} initialUrl={rental.photos[i + 1]?.url} aspectRatio="4/3" />
-          ))}
+        <div style={{ marginBottom: 24 }}>
+          <PhotoPicker items={photos} onChange={setPhotos} />
         </div>
 
         <div className="field" style={{ marginBottom: 8 }}>
