@@ -301,7 +301,7 @@ export default function BookingCalendar({ variant }: Props) {
 
   if (variant === "home") {
     return (
-      <div className="mob-stack mob-cal-has-date" style={{ display: "grid", gridTemplateColumns: "1fr 0.85fr", gap: 20, alignItems: "start" }}>
+      <div className={selectedDate ? "mob-stack mob-cal-has-date" : "mob-stack"} style={{ display: "grid", gridTemplateColumns: "1fr 0.85fr", gap: 20, alignItems: "start" }}>
         {calendar}
         <div key={selectedDate ?? "none"} style={{ display: "flex", flexDirection: "column", gap: 20 }}>
           {!selectedDate ? (
@@ -338,7 +338,10 @@ export default function BookingCalendar({ variant }: Props) {
 
   return (
     <>
-      <div style={{ display: "grid", gridTemplateColumns: "1.3fr 1fr", gap: 32, alignItems: "start" }} className="mob-stack">
+      <div
+        style={{ display: "grid", gridTemplateColumns: "1.3fr 1fr", gap: 32, alignItems: "start" }}
+        className={selectedDate ? "mob-stack mob-cal-has-date" : "mob-stack"}
+      >
         {calendar}
         <div
           key={selectedDate ?? "none"}
