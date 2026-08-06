@@ -39,7 +39,7 @@ Requires Node 20+ and a Postgres database.
 | `ADMIN_USERNAME` / `ADMIN_PASSWORD` | Yes | Credentials for `/admin`. Change these before going live — see "Admin access" below. |
 | `SESSION_SECRET` | Yes | Random string used to sign the admin session cookie. Generate one with `openssl rand -base64 32`. |
 | `RESEND_API_KEY` | No | [Resend](https://resend.com) API key. When set, a booking triggers an email to `NOTIFY_EMAIL`. When unset, bookings still save to the database — the app just logs instead of emailing. |
-| `NOTIFY_EMAIL` | No | Where booking notifications go. Defaults to `hello.leivagroup@gmail.com`. |
+| `NOTIFY_EMAIL` | No | Where booking notifications go. Defaults to `info.andyperez@gmail.com`. |
 
 ## Admin access
 

@@ -9,7 +9,7 @@ export async function sendBookingNotification(booking: {
   reason: string;
 }) {
   const apiKey = process.env.RESEND_API_KEY;
-  const to = process.env.NOTIFY_EMAIL || "hello.leivagroup@gmail.com";
+  const to = process.env.NOTIFY_EMAIL || "info.andyperez@gmail.com";
   if (!apiKey) {
     console.log("[email] RESEND_API_KEY not set — skipping booking notification email.", booking);
     return;
