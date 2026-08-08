@@ -61,19 +61,11 @@ export default function CreateListingForm() {
           </div>
           <div className="field">
             <label>Beds</label>
-            <select className="input" name="beds" defaultValue={2}>
-              {[1, 2, 3, 4, 5].map((n) => (
-                <option key={n} value={n}>{n}</option>
-              ))}
-            </select>
+            <input className="input" type="number" name="beds" min={0} step={0.5} defaultValue={2} />
           </div>
           <div className="field">
             <label>Baths</label>
-            <select className="input" name="baths" defaultValue={1}>
-              {[1, 2, 3, 4, 5].map((n) => (
-                <option key={n} value={n}>{n}</option>
-              ))}
-            </select>
+            <input className="input" type="number" name="baths" min={0} step={0.5} defaultValue={1} />
           </div>
           <div className="field">
             <label>Sq Ft</label>

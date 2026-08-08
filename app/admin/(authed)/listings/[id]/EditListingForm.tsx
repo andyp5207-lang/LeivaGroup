@@ -36,19 +36,11 @@ export default function EditListingForm({ rental }: { rental: RentalWithPhotos }
           </div>
           <div className="field" style={{ width: 80 }}>
             <label>Beds</label>
-            <select className="input" name="beds" defaultValue={rental.beds}>
-              {[1, 2, 3, 4, 5].map((n) => (
-                <option key={n} value={n}>{n}</option>
-              ))}
-            </select>
+            <input className="input" type="number" name="beds" min={0} step={0.5} defaultValue={rental.beds} />
           </div>
           <div className="field" style={{ width: 80 }}>
             <label>Baths</label>
-            <select className="input" name="baths" defaultValue={rental.baths}>
-              {[1, 2, 3, 4, 5].map((n) => (
-                <option key={n} value={n}>{n}</option>
-              ))}
-            </select>
+            <input className="input" type="number" name="baths" min={0} step={0.5} defaultValue={rental.baths} />
           </div>
           <div className="field" style={{ width: 100 }}>
             <label>Sq Ft</label>
