@@ -52,6 +52,7 @@ export default function HomePage() {
             Leave it to Leiva!
           </h1>
           <p
+            className="mob-shrink-tagline"
             style={{
               fontSize: 15,
               letterSpacing: "0.08em",
@@ -59,10 +60,11 @@ export default function HomePage() {
               opacity: 0.95,
               marginBottom: 32,
               color: "#fff",
+              whiteSpace: "nowrap",
               textShadow: "0 2px 10px rgba(0,0,0,0.5), 0 0 16px rgba(255,255,255,0.3)",
             }}
           >
-            Proudly serving the South Bay
+            Proudly serving the South Bay and Orange County
           </p>
           <div style={{ display: "flex", gap: 16, flexWrap: "wrap", alignItems: "center", justifyContent: "center" }}>
             <a

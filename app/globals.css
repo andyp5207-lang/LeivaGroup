@@ -210,6 +210,7 @@ textarea.input { min-height: 90px; resize: vertical; }
   .mob-shrink-logo { height: 80px !important; }
   .mob-shrink-hero { font-size: 76px !important; white-space: normal !important; }
   .mob-shrink-h2 { font-size: 26px !important; white-space: normal !important; }
+  .mob-shrink-tagline { font-size: 12px !important; letter-spacing: 0.04em !important; }
   .mob-tight-pad { padding-left: 10px !important; padding-right: 10px !important; }
   .mob-sticky-off { position: static !important; }
   .mob-col-2 { grid-template-columns: repeat(2, 1fr) !important; }
@@ -233,6 +234,7 @@ textarea.input { min-height: 90px; resize: vertical; }
 
 @media (max-width: 520px) {
   .mob-shrink-hero { font-size: 48px !important; }
+  .mob-shrink-tagline { font-size: 9px !important; letter-spacing: 0.02em !important; }
   .mob-shrink-row { gap: 6px !important; }
   .mob-shrink-row .card { padding: 8px !important; }
   .mob-shrink-row .card-title { font-size: 14px !important; }

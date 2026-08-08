@@ -33,6 +33,8 @@ export async function createListingAction(
   await prisma.rental.create({
     data: {
       address,
+      city: String(formData.get("city") || "South Bay, CA"),
+      zip: String(formData.get("zip") || ""),
       price: String(formData.get("price") || ""),
       beds: Number(formData.get("beds")) || 0,
       baths: Number(formData.get("baths")) || 0,
@@ -44,7 +46,6 @@ export async function createListingAction(
       leaseTerm: String(formData.get("leaseTerm") || ""),
       utilitiesIncluded: String(formData.get("utilitiesIncluded") || ""),
       furnished: String(formData.get("furnished") || ""),
-      city: "South Bay, CA",
       homeType: "Residential",
       photos: {
         create: photoUrls.filter((url): url is string => !!url).map((url, i) => ({ url, position: i })),
@@ -88,6 +89,7 @@ export async function updateListingAction(
       data: {
         address,
         city: String(formData.get("city") || "South Bay, CA"),
+        zip: String(formData.get("zip") || ""),
         price: String(formData.get("price") || ""),
         beds: Number(formData.get("beds")) || 0,
         baths: Number(formData.get("baths")) || 0,

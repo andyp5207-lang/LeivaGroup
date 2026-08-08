@@ -44,6 +44,16 @@ export default function CreateListingForm() {
           <label>Address</label>
           <input className="input" type="text" name="address" placeholder="123 Ocean Ave, Manhattan Beach" required />
         </div>
+        <div className="mob-col-2" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
+          <div className="field">
+            <label>City</label>
+            <input className="input" type="text" name="city" placeholder="Manhattan Beach, CA" />
+          </div>
+          <div className="field">
+            <label>Zip Code</label>
+            <input className="input" type="text" name="zip" placeholder="90266" />
+          </div>
+        </div>
         <div className="mob-col-2" style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr", gap: 14 }}>
           <div className="field">
             <label>Rent</label>
@@ -51,11 +61,19 @@ export default function CreateListingForm() {
           </div>
           <div className="field">
             <label>Beds</label>
-            <input className="input" type="number" name="beds" min={0} defaultValue={2} />
+            <select className="input" name="beds" defaultValue={2}>
+              {[1, 2, 3, 4, 5].map((n) => (
+                <option key={n} value={n}>{n}</option>
+              ))}
+            </select>
           </div>
           <div className="field">
             <label>Baths</label>
-            <input className="input" type="number" name="baths" min={0} defaultValue={1} />
+            <select className="input" name="baths" defaultValue={1}>
+              {[1, 2, 3, 4, 5].map((n) => (
+                <option key={n} value={n}>{n}</option>
+              ))}
+            </select>
           </div>
           <div className="field">
             <label>Sq Ft</label>

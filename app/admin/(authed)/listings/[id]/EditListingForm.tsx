@@ -36,11 +36,19 @@ export default function EditListingForm({ rental }: { rental: RentalWithPhotos }
           </div>
           <div className="field" style={{ width: 80 }}>
             <label>Beds</label>
-            <input className="input" type="number" name="beds" min={0} defaultValue={rental.beds} />
+            <select className="input" name="beds" defaultValue={rental.beds}>
+              {[1, 2, 3, 4, 5].map((n) => (
+                <option key={n} value={n}>{n}</option>
+              ))}
+            </select>
           </div>
           <div className="field" style={{ width: 80 }}>
             <label>Baths</label>
-            <input className="input" type="number" name="baths" min={0} defaultValue={rental.baths} />
+            <select className="input" name="baths" defaultValue={rental.baths}>
+              {[1, 2, 3, 4, 5].map((n) => (
+                <option key={n} value={n}>{n}</option>
+              ))}
+            </select>
           </div>
           <div className="field" style={{ width: 100 }}>
             <label>Sq Ft</label>
@@ -56,9 +64,15 @@ export default function EditListingForm({ rental }: { rental: RentalWithPhotos }
           <label>Address</label>
           <input className="input" type="text" name="address" defaultValue={rental.address} required style={{ fontSize: 22, fontFamily: "var(--font-heading)" }} />
         </div>
-        <div className="field" style={{ marginBottom: 28 }}>
-          <label>City / State</label>
-          <input className="input" type="text" name="city" defaultValue={rental.city} />
+        <div className="mob-col-2" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14, marginBottom: 28 }}>
+          <div className="field">
+            <label>City / State</label>
+            <input className="input" type="text" name="city" defaultValue={rental.city} />
+          </div>
+          <div className="field">
+            <label>Zip Code</label>
+            <input className="input" type="text" name="zip" defaultValue={rental.zip} />
+          </div>
         </div>
 
         <h4 style={{ fontSize: 18, marginBottom: 10 }}>What&rsquo;s Special</h4>

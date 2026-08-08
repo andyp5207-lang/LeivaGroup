@@ -42,7 +42,7 @@ export default function ServiceAreaMap() {
       <path d="M195,130 c0,-14 22,-14 22,0 c0,10 -11,22 -11,28 c0,-6 -11,-18 -11,-28 z" fill="var(--color-accent-700)" stroke="#fff" strokeWidth={1.5} />
       <circle cx={206} cy={131} r={4} fill="#fff" />
       <rect x={212} y={160} width={88} height={20} rx={10} fill="#fff" stroke="var(--color-accent-700)" strokeWidth={1.2} />
-      <text x={256} y={174} fontFamily="'Barlow Condensed', sans-serif" fontSize={14} fontWeight={700} fill="var(--color-accent-800)" textAnchor="middle">LEIVA GROUP</text>
+      <text x={256} y={173} fontFamily="'Barlow Condensed', sans-serif" fontSize={10} fontWeight={700} letterSpacing={0.3} fill="var(--color-accent-800)" textAnchor="middle">LEIVA GROUP</text>
     </svg>
   );
 }

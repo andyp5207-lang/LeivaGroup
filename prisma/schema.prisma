@@ -18,6 +18,7 @@ model Rental {
   id                String   @id @default(cuid())
   address           String
   city              String   @default("South Bay, CA")
+  zip               String   @default("")
   price             String
   beds              Int      @default(0)
   baths             Int      @default(0)
