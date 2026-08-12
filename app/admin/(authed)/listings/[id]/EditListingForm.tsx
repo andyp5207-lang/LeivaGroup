@@ -31,20 +31,20 @@ export default function EditListingForm({ rental }: { rental: RentalWithPhotos }
       <div>
         <div style={{ display: "flex", alignItems: "baseline", gap: 16, flexWrap: "wrap", paddingBottom: 16, borderBottom: "1px solid var(--color-divider)", marginBottom: 24 }}>
           <div className="field" style={{ width: 140 }}>
-            <label>Rent</label>
-            <input className="input" type="text" name="price" defaultValue={rental.price} />
+            <label htmlFor="price">Rent</label>
+            <input className="input" id="price" type="text" name="price" defaultValue={rental.price} />
           </div>
           <div className="field" style={{ width: 80 }}>
-            <label>Beds</label>
-            <input className="input" type="number" name="beds" min={0} step={0.5} defaultValue={rental.beds} />
+            <label htmlFor="beds">Beds</label>
+            <input className="input" id="beds" type="number" name="beds" min={0} step={0.5} defaultValue={rental.beds} />
           </div>
           <div className="field" style={{ width: 80 }}>
-            <label>Baths</label>
-            <input className="input" type="number" name="baths" min={0} step={0.5} defaultValue={rental.baths} />
+            <label htmlFor="baths">Baths</label>
+            <input className="input" id="baths" type="number" name="baths" min={0} step={0.5} defaultValue={rental.baths} />
           </div>
           <div className="field" style={{ width: 100 }}>
-            <label>Sq Ft</label>
-            <input className="input" type="text" name="sqft" defaultValue={rental.sqft} />
+            <label htmlFor="sqft">Sq Ft</label>
+            <input className="input" id="sqft" type="text" name="sqft" defaultValue={rental.sqft} />
           </div>
         </div>
 
@@ -53,23 +53,24 @@ export default function EditListingForm({ rental }: { rental: RentalWithPhotos }
         </div>
 
         <div className="field" style={{ marginBottom: 8 }}>
-          <label>Address</label>
-          <input className="input" type="text" name="address" defaultValue={rental.address} required style={{ fontSize: 22, fontFamily: "var(--font-heading)" }} />
+          <label htmlFor="address">Address</label>
+          <input className="input" id="address" type="text" name="address" defaultValue={rental.address} required style={{ fontSize: 22, fontFamily: "var(--font-heading)" }} />
         </div>
         <div className="mob-col-2" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14, marginBottom: 28 }}>
           <div className="field">
-            <label>City / State</label>
-            <input className="input" type="text" name="city" defaultValue={rental.city} />
+            <label htmlFor="city">City / State</label>
+            <input className="input" id="city" type="text" name="city" defaultValue={rental.city} />
           </div>
           <div className="field">
-            <label>Zip Code</label>
-            <input className="input" type="text" name="zip" defaultValue={rental.zip} />
+            <label htmlFor="zip">Zip Code</label>
+            <input className="input" id="zip" type="text" name="zip" defaultValue={rental.zip} />
           </div>
         </div>
 
         <h4 style={{ fontSize: 18, marginBottom: 10 }}>What&rsquo;s Special</h4>
         <div className="field" style={{ marginBottom: 32 }}>
-          <textarea className="input" rows={3} name="description" defaultValue={rental.description} />
+          <label htmlFor="description" className="sr-only">Description</label>
+          <textarea className="input" id="description" rows={3} name="description" defaultValue={rental.description} />
         </div>
 
         <h4 style={{ fontSize: 18, marginBottom: 14, paddingTop: 8, borderTop: "1px solid var(--color-divider)" }}>Facts &amp; Features</h4>
@@ -126,7 +127,11 @@ export default function EditListingForm({ rental }: { rental: RentalWithPhotos }
           <Field label="Utilities Included" name="utilitiesIncluded" defaultValue={rental.utilitiesIncluded} />
           <Field label="Furnished" name="furnished" defaultValue={rental.furnished} />
         </div>
-        {state?.error && <p style={{ color: "#b64545", fontSize: 13, margin: 0 }}>{state.error}</p>}
+        {state?.error && (
+          <p role="alert" style={{ color: "#b64545", fontSize: 13, margin: 0 }}>
+            {state.error}
+          </p>
+        )}
         <div style={{ display: "flex", gap: 10 }}>
           <button type="submit" className="btn btn-primary" style={{ padding: "10px 24px", flex: 1 }} disabled={pending}>
             {pending ? "Saving…" : "Save Changes"}
@@ -155,8 +160,8 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
 function Field({ label, name, defaultValue, placeholder }: { label: string; name: string; defaultValue?: string; placeholder?: string }) {
   return (
     <div className="field" style={{ marginBottom: 8 }}>
-      <label>{label}</label>
-      <input className="input" type="text" name={name} defaultValue={defaultValue} placeholder={placeholder} />
+      <label htmlFor={name}>{label}</label>
+      <input className="input" id={name} type="text" name={name} defaultValue={defaultValue} placeholder={placeholder} />
     </div>
   );
 }

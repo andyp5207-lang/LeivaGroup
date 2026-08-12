@@ -41,68 +41,72 @@ export default function CreateListingForm() {
 
       <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
         <div className="field">
-          <label>Address</label>
-          <input className="input" type="text" name="address" placeholder="123 Ocean Ave, Manhattan Beach" required />
+          <label htmlFor="address">Address</label>
+          <input className="input" id="address" type="text" name="address" placeholder="123 Ocean Ave, Manhattan Beach" required />
         </div>
         <div className="mob-col-2" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
           <div className="field">
-            <label>City</label>
-            <input className="input" type="text" name="city" placeholder="Manhattan Beach, CA" />
+            <label htmlFor="city">City</label>
+            <input className="input" id="city" type="text" name="city" placeholder="Manhattan Beach, CA" />
           </div>
           <div className="field">
-            <label>Zip Code</label>
-            <input className="input" type="text" name="zip" placeholder="90266" />
+            <label htmlFor="zip">Zip Code</label>
+            <input className="input" id="zip" type="text" name="zip" placeholder="90266" />
           </div>
         </div>
         <div className="mob-col-2" style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr", gap: 14 }}>
           <div className="field">
-            <label>Rent</label>
-            <input className="input" type="text" name="price" placeholder="$3,000/mo" required />
+            <label htmlFor="price">Rent</label>
+            <input className="input" id="price" type="text" name="price" placeholder="$3,000/mo" required />
           </div>
           <div className="field">
-            <label>Beds</label>
-            <input className="input" type="number" name="beds" min={0} step={0.5} defaultValue={2} />
+            <label htmlFor="beds">Beds</label>
+            <input className="input" id="beds" type="number" name="beds" min={0} step={0.5} defaultValue={2} />
           </div>
           <div className="field">
-            <label>Baths</label>
-            <input className="input" type="number" name="baths" min={0} step={0.5} defaultValue={1} />
+            <label htmlFor="baths">Baths</label>
+            <input className="input" id="baths" type="number" name="baths" min={0} step={0.5} defaultValue={1} />
           </div>
           <div className="field">
-            <label>Sq Ft</label>
-            <input className="input" type="text" name="sqft" placeholder="1,100" />
+            <label htmlFor="sqft">Sq Ft</label>
+            <input className="input" id="sqft" type="text" name="sqft" placeholder="1,100" />
           </div>
         </div>
         <div className="field">
-          <label>Description</label>
-          <textarea className="input" rows={3} name="description" placeholder="Tell prospects what makes this property stand out..." />
+          <label htmlFor="description">Description</label>
+          <textarea className="input" id="description" rows={3} name="description" placeholder="Tell prospects what makes this property stand out..." />
         </div>
         <div className="field">
-          <label>Zillow Listing URL (optional)</label>
-          <input className="input" type="url" name="zillowUrl" placeholder="https://www.zillow.com/homedetails/..." />
+          <label htmlFor="zillowUrl">Zillow Listing URL (optional)</label>
+          <input className="input" id="zillowUrl" type="url" name="zillowUrl" placeholder="https://www.zillow.com/homedetails/..." />
         </div>
         <div className="mob-col-2" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
           <div className="field">
-            <label>Pet Policy</label>
-            <input className="input" type="text" name="petsPolicy" placeholder="e.g. Cats OK, no dogs" />
+            <label htmlFor="petsPolicy">Pet Policy</label>
+            <input className="input" id="petsPolicy" type="text" name="petsPolicy" placeholder="e.g. Cats OK, no dogs" />
           </div>
           <div className="field">
-            <label>Available Date</label>
-            <input className="input" type="text" name="availableDate" placeholder="e.g. Sept 1, 2026" />
+            <label htmlFor="availableDate">Available Date</label>
+            <input className="input" id="availableDate" type="text" name="availableDate" placeholder="e.g. Sept 1, 2026" />
           </div>
           <div className="field">
-            <label>Lease Term</label>
-            <input className="input" type="text" name="leaseTerm" placeholder="e.g. 12 months" />
+            <label htmlFor="leaseTerm">Lease Term</label>
+            <input className="input" id="leaseTerm" type="text" name="leaseTerm" placeholder="e.g. 12 months" />
           </div>
           <div className="field">
-            <label>Utilities Included</label>
-            <input className="input" type="text" name="utilitiesIncluded" placeholder="e.g. Water, trash" />
+            <label htmlFor="utilitiesIncluded">Utilities Included</label>
+            <input className="input" id="utilitiesIncluded" type="text" name="utilitiesIncluded" placeholder="e.g. Water, trash" />
           </div>
           <div className="field">
-            <label>Furnished</label>
-            <input className="input" type="text" name="furnished" placeholder="e.g. Unfurnished" />
+            <label htmlFor="furnished">Furnished</label>
+            <input className="input" id="furnished" type="text" name="furnished" placeholder="e.g. Unfurnished" />
           </div>
         </div>
-        {state?.error && <p style={{ color: "#b64545", fontSize: 13, margin: 0 }}>{state.error}</p>}
+        {state?.error && (
+          <p role="alert" style={{ color: "#b64545", fontSize: 13, margin: 0 }}>
+            {state.error}
+          </p>
+        )}
         <button type="submit" className="btn btn-primary" style={{ padding: "12px 28px", alignSelf: "flex-start" }} disabled={pending}>
           {pending ? "Publishing…" : "Publish Listing"}
         </button>

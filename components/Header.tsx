@@ -23,7 +23,7 @@ export default function Header() {
         background: "var(--color-accent-500)",
         width: "100%",
         padding: 0,
-        minHeight: 64,
+        minHeight: 88,
         overflow: "visible",
         position: "sticky",
         top: 0,
@@ -37,7 +37,7 @@ export default function Header() {
         style={{
           maxWidth: 1180,
           width: "100%",
-          height: 64,
+          height: 88,
           flexShrink: 0,
           margin: "0 auto",
           padding: "0 24px",
@@ -50,15 +50,16 @@ export default function Header() {
           <Image
             src="/images/leiva-group-logo.png"
             alt="Leiva Group"
-            width={330}
-            height={110}
+            width={390}
+            height={130}
             priority
             className="mob-shrink-logo"
-            style={{ height: 110, width: "auto", display: "block" }}
+            style={{ height: 140, width: "auto", display: "block" }}
           />
         </Link>
 
         <nav
+          aria-label="Primary"
           className="mob-hide nav-links-shrink"
           style={{ display: "flex", alignItems: "center", gap: 28, fontSize: 17, fontWeight: 700 }}
         >
@@ -86,6 +87,8 @@ export default function Header() {
           type="button"
           onClick={() => setOpen((v) => !v)}
           aria-label="Menu"
+          aria-expanded={open}
+          aria-controls="mobile-nav-menu"
           className="mob-menu-btn"
           style={{
             display: "none",
@@ -110,6 +113,8 @@ export default function Header() {
 
       {open && (
         <nav
+          id="mobile-nav-menu"
+          aria-label="Mobile"
           className="mob-hamburger-links"
           style={{ display: "flex", flexDirection: "column", background: "var(--color-accent-500)", padding: 0 }}
         >

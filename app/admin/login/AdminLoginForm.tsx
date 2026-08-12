@@ -9,14 +9,14 @@ export default function AdminLoginForm() {
   return (
     <form action={formAction} style={{ display: "flex", flexDirection: "column", gap: 16 }}>
       <div className="field">
-        <label>Username</label>
-        <input className="input" type="text" name="username" placeholder="Username" required />
+        <label htmlFor="username">Username</label>
+        <input className="input" id="username" type="text" name="username" placeholder="Username" required />
       </div>
       <div className="field">
-        <label>Password</label>
-        <input className="input" type="password" name="password" placeholder="Password" required />
+        <label htmlFor="password">Password</label>
+        <input className="input" id="password" type="password" name="password" placeholder="Password" required />
       </div>
-      {state?.error && <p style={{ color: "#b64545", fontSize: 13, margin: 0 }}>{state.error}</p>}
+      {state?.error && <p role="alert" style={{ color: "#b64545", fontSize: 13, margin: 0 }}>{state.error}</p>}
       <button type="submit" className="btn btn-primary btn-block" style={{ padding: "14px 28px" }} disabled={pending}>
         {pending ? "Logging in…" : "Log In"}
       </button>

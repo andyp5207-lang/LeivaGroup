@@ -169,12 +169,12 @@ export default function BookingCalendar({ variant }: Props) {
       </>
     ) : null
   ) : submitted ? (
-    <>
+    <div role="status" aria-live="polite">
       <h4 style={{ marginBottom: 10 }}>You&rsquo;re booked!</h4>
       <p style={{ fontSize: 14, margin: 0 }}>
         {dateDisplay(selectedDate)} at {selectedSlot} — we&rsquo;ll be in touch to confirm.
       </p>
-    </>
+    </div>
   ) : !selectedSlot ? (
     <>
       <h4 style={{ marginBottom: 4 }}>{dateDisplay(selectedDate)}</h4>
@@ -226,16 +226,16 @@ export default function BookingCalendar({ variant }: Props) {
         {selectedSlot}
       </p>
       <div className="field">
-        <label>Name</label>
-        <input className="input" type="text" name="name" placeholder="Jane Smith" required />
+        <label htmlFor="booking-name">Name</label>
+        <input className="input" id="booking-name" type="text" name="name" placeholder="Jane Smith" required />
       </div>
       <div className="field">
-        <label>Email</label>
-        <input className="input" type="email" name="email" placeholder="jane@email.com" required />
+        <label htmlFor="booking-email">Email</label>
+        <input className="input" id="booking-email" type="email" name="email" placeholder="jane@email.com" required />
       </div>
       <div className="field">
-        <label>Reason for Contacting</label>
-        <select className="input" name="reason" defaultValue={CONTACT_REASONS[0]}>
+        <label htmlFor="booking-reason">Reason for Contacting</label>
+        <select className="input" id="booking-reason" name="reason" defaultValue={CONTACT_REASONS[0]}>
           {CONTACT_REASONS.map((r) => (
             <option key={r} value={r}>
               {r}
@@ -244,7 +244,7 @@ export default function BookingCalendar({ variant }: Props) {
         </select>
       </div>
       {state && "error" in state && (
-        <p style={{ color: "#b64545", fontSize: 13, margin: 0 }}>{state.error}</p>
+        <p role="alert" style={{ color: "#b64545", fontSize: 13, margin: 0 }}>{state.error}</p>
       )}
       <button type="submit" className="btn btn-primary btn-block" style={{ padding: "12px 28px" }} disabled={pending}>
         {pending ? "Booking…" : "Confirm Appointment"}

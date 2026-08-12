@@ -32,8 +32,13 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className={`${poppins.variable} ${nunito.variable} ${pacifico.variable}`}>
       <body style={{ minHeight: "100vh", display: "flex", flexDirection: "column" }}>
+        <a href="#main-content" className="skip-link">
+          Skip to main content
+        </a>
         <Header />
-        <main style={{ flex: 1, display: "flex", flexDirection: "column" }}>{children}</main>
+        <main id="main-content" style={{ flex: 1, display: "flex", flexDirection: "column" }}>
+          {children}
+        </main>
         <Footer />
       </body>
     </html>
